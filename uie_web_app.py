@@ -53,10 +53,7 @@ def image_enhancer():
             st.text("Uploaded Image")
             st.image(image, use_column_width=True)
             imtype = st.radio("Select one", ('Greenish Image', 'Bluish Image'))
-            if imtype == "Greenish Image":
-                flag=0
-            else:
-                flag=1
+            flag = 0 if imtype == "Greenish Image" else 1
             if(st.button("Enhance Uploaded Image")):
                 pcafused, averagefused = underwater_image_enhancement(image, flag)
                 st.text("Enhanced Image Using PCA Based Fusion")
@@ -246,13 +243,13 @@ def sharpen(wbimage, original):
 def hsv_global_equalization(image):
     # Convert to HSV
     hsvimage = image.convert('HSV')
-   
+
     # Plot HSV Image
     # plt.figure(figsize = (20, 20))
     # plt.subplot(1, 2, 1)
     # plt.title("White balanced Image")
     # plt.imshow(hsvimage)
-    
+
     # Splitting the Hue, Saturation and Value Component 
     Hue, Saturation, Value = hsvimage.split()
     # Perform Equalization on Value Component
@@ -264,18 +261,10 @@ def hsv_global_equalization(image):
     equalizedIm[:, :, 0]= Hue;
     equalizedIm[:, :, 1]= Saturation;
     equalizedIm[:, :, 2]= equalizedValue;
-    
+
     # Convert the array to image
-    hsvimage = Image.fromarray(equalizedIm, 'HSV') 
-    # Convert to RGB
-    rgbimage = hsvimage.convert('RGB')
-    
-    # Plot equalized image
-    # plt.subplot(1, 2, 2)
-    # plt.title("Contrast enhanced Image")
-    # plt.imshow(rgbimage)
-    
-    return rgbimage
+    hsvimage = Image.fromarray(equalizedIm, 'HSV')
+    return hsvimage.convert('RGB')
 
 # # Fusion of sharpened image and contrast enhanced image
 
